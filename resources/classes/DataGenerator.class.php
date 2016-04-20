@@ -154,7 +154,7 @@ class DataGenerator {
 	 * Helper to see if we're in demo mode, and limit the number of rows that can be generated.
 	 */
 	private function applyRowsGeneratedLimit() {
-		if (Core::checkDemoMode() && !Core::checkIsLoggedIn()) {
+		if (Core::checkDemoMode() === 'true'  && !Core::checkIsLoggedIn()) {
 			$maxDemoModeRows = Core::getMaxDemoModeRows();
 			if ($this->numResults > $maxDemoModeRows) {
 				$this->numResults = $maxDemoModeRows;
