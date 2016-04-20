@@ -229,7 +229,7 @@ class Core {
      * @access public
      */
 	public static function checkDemoMode() {
-		return (self::$demoMode) ? "true" : "false";
+		return (bool) self::$demoMode;
 	}
 
 	/**
