@@ -11,10 +11,12 @@ number of words.
     "numRows": 20,
     "rows": [
         {
-            "type": "TextFixed",
+            "type": "TextRandom",
             "title": "text",
             "settings": {
-                "numWords": 5 
+                "startsWithLipsum": false,
+                "minWords": 2,
+                "maxWords": 10
             }
         }
     ],

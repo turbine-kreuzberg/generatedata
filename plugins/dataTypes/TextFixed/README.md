@@ -10,12 +10,10 @@ This Data Type generates a fixed number of random words.
     "numRows": 20,
     "rows": [
         {
-            "type": "TextRandom",
+            "type": "TextFixed",
             "title": "text",
             "settings": {
-                "startsWithLipsum": false,
-                "minWords": 2,
-                "maxWords": 10
+                "numWords": 5 
             }
         }
     ],

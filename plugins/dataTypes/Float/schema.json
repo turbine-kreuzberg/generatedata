@@ -1,0 +1,20 @@
+{
+	"title": "Float",
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"properties": {
+		"min": {
+			"type": "integer"
+		},
+		"max": {
+			"type": "integer"
+		},
+		"decimalPoint": {
+			"type": "string"
+		},
+		"decimalPlaces": {
+			"type": "integer"
+		}
+	},
+	"required": ["max"]
+}
