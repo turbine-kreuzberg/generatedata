@@ -36,7 +36,7 @@ Post the following JSON content to the following API path:
     ],
     "export": {
         "type": "ProgrammingLanguage",
-        "settings" {
+        "settings": {
             "language": "Perl"
         }
     }
