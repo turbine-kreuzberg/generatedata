@@ -283,3 +283,9 @@ $L["your_account"] = "Ihr Konto";
 $L["your_data_set_name_here"] = "Name für Datensatz eingeben...";
 $L["your_data_sets"] = "Ihre Datensätze";
 $L["zip_q"] = "Zip?";
+
+// new in 3.1.1
+$L["credit_card_data"] = "Kreditkarten-Daten";
+
+// new in 3.2.1
+$L["history"] = "History";
