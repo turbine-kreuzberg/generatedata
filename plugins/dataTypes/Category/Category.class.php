@@ -45,6 +45,14 @@ class DataType_Category extends DataTypePlugin {
 
 		if (isset($randomCategory[$options['fieldName']])) {
 			$value = $randomCategory[$options['fieldName']];
+
+			if ($options['fieldName'] == 'name' && isset($options['replace'])) {
+                list($search, $replacement) = explode('|', $options['replace']);
+
+				if (strpos($value, $search)) {
+					$value = str_replace($search, $replacement, $value);
+				}
+			}
 		}
 		else {
 			$value = '<Invalid field name>';
@@ -63,6 +71,7 @@ class DataType_Category extends DataTypePlugin {
 
 		$options = array(
 			"fieldName"  => $postdata["dtCategoryFieldName_". $column],
+			"replace"  => isset($postdata["dtCategoryReplace_$column"]) ? $postdata["dtCategoryReplace_$column"] : '',
 		);
 
 		return $options;
@@ -75,6 +84,7 @@ class DataType_Category extends DataTypePlugin {
 
 		$options = array(
 			"fieldName" => $json->settings->fieldName,
+			"replace" => property_exists($json->settings, 'replace') ? $json->settings->replace : '',
 		);
 
 		return $options;

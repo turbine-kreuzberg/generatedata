@@ -5,6 +5,10 @@
 	"properties": {
 		"fieldName": {
 			"type": "string"
+		},
+		"replace": {
+			"type": "string",
+			"pattern": "^[^|]+|^[^|]*$"
 		}
 	},
 	"required": ["fieldName"]
