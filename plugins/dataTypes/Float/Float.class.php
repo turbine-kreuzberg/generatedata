@@ -64,10 +64,10 @@ class DataType_Float extends DataTypePlugin {
 		}
 
         $options = array(
-            "min"           => property_exists($json->settings->min) ? $json->settings->min : 0,
+            "min"           => property_exists($json->settings, 'min') ? $json->settings->min : 0,
             "max"           => $json->settings->max,
-            "decimalPoint"  => property_exists($json->settings->decimalPoint) ? $json->settings->decimalPoint : '.',
-            "decimalPlaces" => property_exists($json->settings->decimalPlaces) ? $json->settings->decimalPlaces : 2,
+            "decimalPoint"  => property_exists($json->settings, 'decimalPoint') ? $json->settings->decimalPoint : '.',
+            "decimalPlaces" => property_exists($json->settings, 'decimalPlaces') ? $json->settings->decimalPlaces : 2,
         );
 
 		return $options;
