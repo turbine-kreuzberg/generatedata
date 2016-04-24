@@ -10,10 +10,15 @@
 			"type": "integer"
 		},
 		"decimalPoint": {
-			"type": "string"
+			"type": "string",
+			"minLength": 1,
+			"maxLength": 1,
+			"pattern": "^[.,]$"
 		},
 		"decimalPlaces": {
-			"type": "integer"
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 5
 		}
 	},
 	"required": ["max"]
