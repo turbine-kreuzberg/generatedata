@@ -50,7 +50,7 @@ class DataType_Tree extends DataTypePlugin {
 		$probablyUniqueParentRowValue = $parentRowData["randomData"]["display"];
 
 		if ($storageType == "privateVar") {
-			if ($probablyUniqueParentRowValue == 1) {
+			if ($probablyUniqueParentRowValue <= $options['rootNodes']) {
 				$this->openTreeNodes[] = array($probablyUniqueParentRowValue, 1);
 				return "0";
 			}
@@ -72,7 +72,7 @@ class DataType_Tree extends DataTypePlugin {
 		}  else {
 
 			$sessions_openTreeNodes = unserialize($_SESSION["gdTree_openTreeNodes"]);
-			if ($probablyUniqueParentRowValue == 1) {
+			if ($probablyUniqueParentRowValue <= $options['rootNodes']) {
 				$sessions_openTreeNodes[] = array($probablyUniqueParentRowValue, 1);
 				$_SESSION["gdTree_openTreeNodes"] = serialize($sessions_openTreeNodes);
 				return "0";
@@ -108,7 +108,8 @@ class DataType_Tree extends DataTypePlugin {
 		// reason being perhaps the user wants to use another field, like an alpha-numeric or GUID
 		$options = array(
 			"autoIncrementRowNum" => $postdata["dtTreeAutoIncrementRowNum_$colNum"],
-			"maxSiblings"         => $postdata["dtTreeMaxSiblings_$colNum"]
+			"maxSiblings"         => $postdata["dtTreeMaxSiblings_$colNum"],
+			"rootNodes"           => isset($postdata["dtTreeRootNodes_$colNum"]) ? $postdata["dtTreeRootNodes_$colNum"] : 1,
 		);
 
 		return $options;
@@ -117,7 +118,8 @@ class DataType_Tree extends DataTypePlugin {
 	public function getRowGenerationOptionsAPI($generator, $json, $numCols) {
 		$options = array(
 			"autoIncrementRowNum" => $json->settings->autoIncRowNum,
-			"maxSiblings"         => $json->settings->maxSiblings
+			"maxSiblings"         => $json->settings->maxSiblings,
+			"rootNodes"           => property_exists($json->settings, 'rootNodes') ? $json->settings->rootNodes : 1,
 		);
 
 		return $options;
