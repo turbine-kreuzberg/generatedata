@@ -9,6 +9,10 @@
 		"maxSiblings": {
 			"type": "integer",
 			"minimum": 1
+		},
+		"rootNodes": {
+			"type": "integer",
+			"minimum": 1
 		}
 	},
 	"required": ["autoIncRowNum", "maxSiblings"]
