@@ -12,16 +12,6 @@ class DataType_Category extends DataTypePlugin {
 	protected $dataTypeFieldGroup = "human_data";
 	protected $dataTypeFieldGroupOrder = 115;
 
-	/**
-	 * @var array
-	 */
-	private $names;
-
-	/**
-	 * @var array
-	 */
-	private $parentIds;
-
     /**
      * @var array
      */
@@ -111,18 +101,9 @@ END;
 		return $html;
 	}
 
-	public function getNames() {
-		return $this->names;
-	}
-
 	public function getCategories() {
 		return $this->categories;
 	}
-
-	public function getParentIds() {
-		return $this->parentIds;
-	}
-
 
 	// -------- private member functions ---------
 
@@ -138,9 +119,8 @@ END;
 		");
 
 		if ($response["success"]) {
-			$names = array();
 			$categories = array();
-			$parentIds = array();
+
 			while ($row = mysqli_fetch_assoc($response["results"])) {
 				$categories[] = $row;
 			}

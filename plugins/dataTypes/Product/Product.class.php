@@ -34,41 +34,45 @@ class DataType_Product extends DataTypePlugin {
 
 
 	public function generate($generator, $generationContextData) {
-		$placeholderStr = $generationContextData["generationOptions"];
+		$options = $generationContextData["generationOptions"];
 
-        $randomProducts = $this->getRandomProducts($this->getCategories());
-		while (preg_match("/product_id/", $placeholderStr)) {
-            $placeholderStr = preg_replace("/product_id/", $randomProducts['product_id'], $placeholderStr, 1);
+        $randomProduct = $this->getRandomProduct($this->getProducts());
+
+		if (isset($randomProduct[$options['fieldName']])) {
+			$value = $randomProduct[$options['fieldName']];
 		}
-        while (preg_match("/name/", $placeholderStr)) {
-            $placeholderStr = preg_replace("/name/", $randomProducts['name'], $placeholderStr, 1);
-        }
-
-		// in case the user entered multiple | separated formats, pick one
-		$formats = explode("|", $placeholderStr);
-		$chosenFormat = $formats[0];
-		if (count($formats) > 1) {
-			$chosenFormat = $formats[mt_rand(0, count($formats)-1)];
+		else {
+			$value = '<Invalid field name>';
 		}
 
 		return array(
-			"display" => trim($chosenFormat)
+			"display" => $value
 		);
 	}
 
 
-	public function getRowGenerationOptionsUI($generator, $post, $colNum, $numCols) {
-		if (!isset($post["dtOption_$colNum"]) || empty($post["dtOption_$colNum"])) {
+	public function getRowGenerationOptionsUI($generator, $postdata, $column, $numCols) {
+		if ((empty($postdata["dtProductFieldName_".$column]))) {
 			return false;
 		}
-		return $post["dtOption_$colNum"];
+
+		$options = array(
+			"fieldName"  => $postdata["dtProductFieldName_". $column],
+		);
+
+		return $options;
 	}
 
 	public function getRowGenerationOptionsAPI($generator, $json, $numCols) {
-		if (empty($json->settings->placeholder)) {
+		if (empty($json->settings->fieldName)) {
 			return false;
 		}
-		return $json->settings->placeholder;
+
+		$options = array(
+			"fieldName" => $json->settings->fieldName,
+		);
+
+		return $options;
 	}
 
 
@@ -80,20 +84,16 @@ class DataType_Product extends DataTypePlugin {
 		);
 	}
 
-	public function getExampleColumnHTML() {
-		$L = Core::$language->getCurrentLanguageStrings();
-
-		$html =<<< END
-	<select name="dtExample_%ROW%" id="dtExample_%ROW%">
-		<option value="">{$L["please_select"]}</option>
-		<option value="Name">Name</option>
+	public function getOptionsColumnHTML() {
+		$html =<<<END
+&nbsp;{$this->L["DecimalPoint"]}
+	<select name="dtProductFieldName_%ROW%" id="dtProductFieldName_%ROW%">
+		<option value="name">{$this->L["ProductName"]}</option>
+		<option value="product_id">{$this->L["ProductId"]}</option>
+		<option value="image">{$this->L["ProductImage"]}</option>
 	</select>
 END;
 		return $html;
-	}
-
-	public function getOptionsColumnHTML() {
-		return '<input type="text" name="dtOption_%ROW%" id="dtOption_%ROW%" style="width: 267px" />';
 	}
 
 	public function getNames() {
@@ -114,23 +114,20 @@ END;
 		$prefix = Core::getDbTablePrefix();
 		$response = Core::$db->query("
 			SELECT *
-			FROM   {$prefix}categories
+			FROM   {$prefix}products
 		");
 
 		if ($response["success"]) {
 			$products = array();
 			while ($row = mysqli_fetch_assoc($response["results"])) {
-				$products[] = [
-                    'product_id' => $row["product_id"],
-				    'name' => $row["name"],
-                ];
+				$products[] = $row;
 			}
 
 			$this->products  = $products;
 		}
 	}
 
-	private function getRandomProducts($nameArray) {
+	private function getRandomProduct($nameArray) {
 		return $nameArray[mt_rand(0, count($nameArray)-1)];
 	}
 

@@ -1,4 +1,4 @@
-## Category Data Type
+## Product Data Type
 
 This Data Type generates a random country name. It can be used in two ways:
 1. Generates a random country name from the ~250 countries in the world. 
